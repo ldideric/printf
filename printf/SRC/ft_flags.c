@@ -6,7 +6,7 @@
 /*   By: ldideric <ldideric@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/12/03 01:38:37 by ldideric       #+#    #+#                */
-/*   Updated: 2019/12/12 12:15:34 by ldideric      ########   odam.nl         */
+/*   Updated: 2019/12/16 12:27:35 by ldideric      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,10 @@ int				ft_flags(char *str, va_list ap)
 	i = 1;
 	list = ft_argnew();
 	if (str[i] == '%')
-		return (ft_putchar(str[i]));
+	{
+		return (1);
+		ft_putchar_fd(str[i], 1);
+	}
 	if (ft_isalpha(str[i]) == 0)
 		*list = ft_flagcheck(str + i, *list);
 	while (ft_isalpha(str[i]) == 0)

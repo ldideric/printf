@@ -6,7 +6,7 @@
 /*   By: ldideric <ldideric@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/10/31 13:47:21 by ldideric       #+#    #+#                */
-/*   Updated: 2019/12/02 18:54:41 by ldideric      ########   odam.nl         */
+/*   Updated: 2019/12/16 12:29:52 by ldideric      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,5 +50,8 @@ void				ft_putchar_fd(char c, int fd);
 void				ft_putstr_fd(char *s, int fd);
 void				ft_putendl_fd(char *s, int fd);
 void				ft_putnbr_fd(int n, int fd);
+
+void				ft_putchar(char c);
+void				ft_putstr(char *s);
 
 #endif
