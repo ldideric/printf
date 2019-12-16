@@ -6,7 +6,7 @@
 #    By: ldideric <marvin@codam.nl>                   +#+                      #
 #                                                    +#+                       #
 #    Created: 2019/10/31 13:33:11 by ldideric       #+#    #+#                 #
-#    Updated: 2019/12/12 16:47:32 by ldideric      ########   odam.nl          #
+#    Updated: 2019/12/16 12:36:49 by ldideric      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -106,6 +106,9 @@ V	= \x1b[38;5;239m
 #reset to white
 RES	= \x1b[0m
 
+
+#random variables to do cool stuff with
+
 REAL	= \x1b[38;5;205m|\x1b[38;5;219mREAL\x1b[38;5;205m|\x1b[38;5;219m
 MINE	= \x1b[38;5;205m|\x1b[38;5;219mMINE\x1b[38;5;205m|\x1b[38;5;219m
 STRING	= $(R)Your forgot %s! %s...
@@ -113,6 +116,9 @@ ARG		= \"input, dumbass\", \"Give input with STRING and ARG\"
 X		= \x1b[38;5;
 Z		= m
 SUM		= 1
+
+
+# all the actual rules
 
 all: $(NAME)
 
@@ -185,7 +191,7 @@ prettycomp: header $(NAME) bonus clean
 norm:
 	@echo "$(R)NORMINETTE$(RES)"
 	@norminette printf libft libft_bonus Makefile
-	@echo "$(R)NORMINETTE+$(RES)"
+	@echo "$(R)NORMINETTE PLUS$(RES)"
 	@python ~/norminette+/run.py printf libft libft_bonus Makefile
 
 test:
@@ -200,4 +206,3 @@ test:
 	@echo "$(PI).---#|=============|#---.$(RES)"
 	@./a.out
 	@echo "$(PI)'---#|=============|#---'$(RES)"
-#	@rm a.out
