@@ -6,7 +6,7 @@
 #    By: ldideric <marvin@codam.nl>                   +#+                      #
 #                                                    +#+                       #
 #    Created: 2019/10/31 13:33:11 by ldideric       #+#    #+#                 #
-#    Updated: 2019/12/16 12:36:49 by ldideric      ########   odam.nl          #
+#    Updated: 2019/12/16 14:47:54 by ldideric      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,8 @@ PRINTF_SRC	=	ft_printf.c \
 				printf_di.c \
 				printf_p.c \
 				printf_u.c \
-				printf_x.c
+				printf_x.c \
+				printf_per.c
 PRINTF_OBJ	= $(PRINTF_SRC:.c=.o)
 
 LIBFT_PATH	= ./libft/
@@ -59,7 +60,9 @@ LIBFT_SRC	=	ft_memset.c \
 				ft_putchar_fd.c \
 				ft_putstr_fd.c \
 				ft_putendl_fd.c \
-				ft_putnbr_fd.c
+				ft_putnbr_fd.c \
+				ft_putchar.c \
+				ft_putstr.c
 LIBFT_OBJ	= ${LIBFT_SRC:.c=.o}
 
 BONUS_PATH	= ./libft_bonus/

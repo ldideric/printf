@@ -6,7 +6,7 @@
 /*   By: ldideric <ldideric@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/12/02 17:15:25 by ldideric       #+#    #+#                */
-/*   Updated: 2019/12/16 11:14:15 by ldideric      ########   odam.nl         */
+/*   Updated: 2019/12/16 14:48:19 by ldideric      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,5 +45,6 @@ int				printf_p(va_list ap, t_arg list);
 int				printf_di(va_list ap, t_arg list);
 int				printf_u(va_list ap, t_arg list);
 int				printf_x(va_list ap, t_arg list);
+int				printf_per(va_list ap, t_arg list);
 
 #endif

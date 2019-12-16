@@ -6,19 +6,14 @@
 /*   By: ldideric <ldideric@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/12/02 15:40:13 by ldideric       #+#    #+#                */
-/*   Updated: 2019/12/16 12:32:03 by ldideric      ########   odam.nl         */
+/*   Updated: 2019/12/16 15:23:26 by ldideric      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static int	ft_makestr(char *format, va_list ap)
+static int	ft_makestr(char *format, va_list ap, int len, int i)
 {
-	int i;
-	int len;
-
-	i = 0;
-	len = 0;
 	while (format[i] != '\0')
 	{
 		if (format[i] != '%')
@@ -29,11 +24,10 @@ static int	ft_makestr(char *format, va_list ap)
 		else if (format[i] == '%')
 		{
 			len = len + ft_flags(format + i, ap);
-			if (format[i + 1] == '%')
+			while (ft_isalpha(format[i]) == 0 && format[i] != '%')
 				i++;
-			else
-				while (ft_isalpha(format[i]) == 0)
-					i++;
+			if (format[i] == '%')
+				i++;
 		}
 		i++;
 	}
@@ -46,7 +40,7 @@ int			ft_printf(const char *format, ...)
 	int			len;
 
 	va_start(ap, format);
-	len = ft_makestr((char *)format, ap);
+	len = ft_makestr((char *)format, ap, 0, 0);
 	va_end(ap);
 	return (len);
 }

@@ -6,7 +6,7 @@
 /*   By: ldideric <ldideric@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/12/03 02:51:47 by ldideric       #+#    #+#                */
-/*   Updated: 2019/12/16 12:31:28 by ldideric      ########   odam.nl         */
+/*   Updated: 2019/12/16 13:49:23 by ldideric      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,13 +66,11 @@ static int	printf_s_ext(va_list ap, t_arg list)
 
 	i = 0;
 	c = (list.zero) ? '0' : ' ';
-	list.width = (list.intwidth) ? va_arg(ap, int) : list.width;
 	if (list.width < 0)
 	{
 		list.minus = 1;
 		list.width = -list.width;
 	}
-	list.prec = (list.intprec) ? va_arg(ap, int) : list.prec;
 	list.intprec = 0;
 	s = va_arg(ap, char *);
 	s = (s == NULL) ? "(null)" : s;
@@ -80,7 +78,7 @@ static int	printf_s_ext(va_list ap, t_arg list)
 	+ printf_s_width(s, list, c) : i;
 	i = (list.width && !list.minus) ? i + printf_s_width(s, list, c) \
 	+ printf_s_str(s, list) : i;
-	i = (!list.width && !list.minus) ? i + printf_s_str(s, list) : i;
+	i = ((!list.width && !list.minus) || (!list.width && list.minus)) ? i + printf_s_str(s, list) : i;
 	return (i);
 }
 
@@ -90,7 +88,9 @@ int			printf_s(va_list ap, t_arg list)
 	int		i;
 
 	i = 0;
-	if (list.intprec || list.prec || list.width || list.intwidth)
+	list.width = (list.intwidth) ? va_arg(ap, int) : list.width;
+	list.prec = (list.intprec) ? va_arg(ap, int) : list.prec;
+	if (list.prec || list.width)
 		i = printf_s_ext(ap, list);
 	else
 	{

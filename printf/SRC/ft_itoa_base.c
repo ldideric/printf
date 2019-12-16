@@ -6,7 +6,7 @@
 /*   By: ldideric <ldideric@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/12/06 10:41:54 by ldideric       #+#    #+#                */
-/*   Updated: 2019/12/11 12:21:10 by ldideric      ########   odam.nl         */
+/*   Updated: 2019/12/16 12:49:27 by ldideric      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ char		*ft_itoa_base(long long a, int base, int big)
 	str = malloc(sizeof(char) * (i + 2));
 	str[i + 1] = '\0';
 	str = itoa_base(str, a, base);
-	while (i > 0 && big == 0)
+	while (i >= 0 && big == 0)
 	{
 		str[i] = ft_tolower(str[i]);
 		i--;

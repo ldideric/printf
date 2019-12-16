@@ -6,7 +6,7 @@
 /*   By: ldideric <ldideric@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/12/03 01:38:37 by ldideric       #+#    #+#                */
-/*   Updated: 2019/12/16 12:27:35 by ldideric      ########   odam.nl         */
+/*   Updated: 2019/12/16 14:49:50 by ldideric      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ static t_spec	ft_specifier(char c)
 		['u'] = &printf_u,
 		['x'] = &printf_x,
 		['X'] = &printf_x,
+		['%'] = &printf_per,
 	};
 
 	return (spec[(int)c]);
@@ -74,21 +75,8 @@ static t_arg	ft_flagcheck(char *str, t_arg list)
 		i = i + ft_flagwp(str + i, &list, 1);
 	if (str[i] == '.')
 		i = i + ft_flagwp(str + i + 1, &list, 0);
-	list.hex = (str[i] == 'X') ? 1 : list.hex;
 	return (list);
 }
-
-// void		ft_printlist(t_arg list, char *str)
-// {
-// 	printf("\nstring: %s\n", str);
-// 	printf("prec\t: %d\n", list.prec);
-// 	printf("intprec\t: %d\n", list.intprec);
-// 	printf("width\t: %d\n", list.width);
-// 	printf("intwidth: %d\n", list.intwidth);
-// 	printf("minus\t: %d\n", list.minus);
-// 	printf("zero\t: %d\n", list.zero);
-// 	printf("hex\t: %d\n\t", list.hex);
-// }
 
 int				ft_flags(char *str, va_list ap)
 {
@@ -98,17 +86,12 @@ int				ft_flags(char *str, va_list ap)
 
 	i = 1;
 	list = ft_argnew();
-	if (str[i] == '%')
-	{
-		return (1);
-		ft_putchar_fd(str[i], 1);
-	}
 	if (ft_isalpha(str[i]) == 0)
 		*list = ft_flagcheck(str + i, *list);
-	while (ft_isalpha(str[i]) == 0)
+	while (ft_isalpha(str[i]) == 0 && str[i] != '%')
 		i++;
+	list[0].hex = (str[i] == 'X') ? 1 : list[0].hex;
 	spec = ft_specifier(str[i]);
-//	ft_printlist(*list, str);
 	i = spec(ap, *list);
 	free(list);
 	return (i);

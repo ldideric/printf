@@ -6,26 +6,94 @@
 /*   By: ldideric <ldideric@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/12/07 13:48:42 by ldideric       #+#    #+#                */
-/*   Updated: 2019/12/09 15:58:42 by ldideric      ########   odam.nl         */
+/*   Updated: 2019/12/16 13:37:26 by ldideric      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int			printf_x(va_list ap, t_arg list)
+static int	printf_x_str(char *s, t_arg list)
 {
-	char	*str;
+	int i;
+
+	i = 0;
+	if (list.prec > (int)ft_strlen(s))
+	{
+		while (i < list.prec - (int)ft_strlen(s))
+		{
+			ft_putchar('0');
+			i++;
+		}
+		while (s[i - (list.prec - (int)ft_strlen(s))] && i < list.prec)
+		{
+			ft_putchar(s[i - (list.prec - (int)ft_strlen(s))]);
+			i++;
+		}
+	}
+	else
+		while (s[i])
+		{
+			ft_putchar(s[i]);
+			i++;
+		}
+	return (i);
+}
+
+static int	printf_x_width(char *s, t_arg list)
+{
+	char	c;
+	int		len;
+	int		slen;
+
+	slen = 0;
+	len = 0;
+	slen = (list.prec && list.prec > (int)ft_strlen(s)) ? list.prec : (int)ft_strlen(s);
+	len = (list.width > slen) ? list.width - slen : 0;
+	c = (list.zero && !list.prec) ? '0' : ' ';
+	while (len > 0)
+	{
+		ft_putchar(c);
+		len--;
+	}
+	len = (list.width > slen) ? list.width - slen : 0;
+	return (len);
+}
+
+static int	printf_x_ext(va_list ap, t_arg list)
+{
+	char	*s;
 	int		i;
 
-	i = (list.hex) ? 1 : 0;
-	str = ft_itoa_base(va_arg(ap, long long), 16, i);
 	i = 0;
-	if (list.intprec)
-		list.prec = va_arg(ap, int);
-	while (str[i])
+	list.width = (list.intwidth) ? va_arg(ap, int) : list.width;
+	list.prec = (list.intprec) ? va_arg(ap, int) : list.prec;
+	s = ft_itoa_base(va_arg(ap, unsigned int), 16, (list.hex) ? 1 : 0);
+	s = (ft_strncmp(s, "0", 2) == 0 && list.prec) ? "" : s;
+	i = (list.width && list.minus) ? i + printf_x_str(s, list) + printf_x_width(s, list) : i;
+	i = (list.width && !list.minus) ? i + printf_x_width(s, list) + printf_x_str(s, list) : i;
+	i = ((!list.width && !list.minus) || (!list.width && list.minus)) ? i + printf_x_str(s, list) : i;
+	return (i);
+}
+
+int			printf_x(va_list ap, t_arg list)
+{
+	char	*s;
+	int		i;
+
+	i = 0;
+	list.width = (list.intwidth) ? va_arg(ap, int) : list.width;
+	list.prec = (list.intprec) ? va_arg(ap, int) : list.prec;
+	if (list.prec || list.width)
+		i = printf_x_ext(ap, list);
+	else
 	{
-		ft_putchar(str[i]);
-		i++;
+		s = ft_itoa_base(va_arg(ap, unsigned int), 16,
+		(list.hex) ? 1 : 0);
+		while (s[i])
+		{
+			ft_putchar(s[i]);
+			i++;
+		}
 	}
 	return (i);
 }

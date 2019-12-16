@@ -1,0 +1,34 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        ::::::::            */
+/*   printf_per.c                                       :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: ldideric <ldideric@student.codam.nl>         +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2019/12/16 14:42:02 by ldideric       #+#    #+#                */
+/*   Updated: 2019/12/16 15:17:17 by ldideric      ########   odam.nl         */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "ft_printf.h"
+
+int			printf_per(va_list ap, t_arg list)
+{
+	int		len;
+	char	c;
+
+	c = (list.zero && !list.minus) ? '0' : ' ';
+	len = 0;
+	list.width = (list.intwidth) ? va_arg(ap, int) : list.width;
+	if (list.minus)
+		ft_putchar('%');
+	if (list.width)
+		while (len < list.width - 1)
+		{
+			ft_putchar(c);
+			len++;
+		}
+	if (!list.minus)
+		ft_putchar('%');
+	return (len + 1);
+}
