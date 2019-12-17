@@ -6,7 +6,7 @@
 /*   By: ldideric <ldideric@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/12/02 15:40:13 by ldideric       #+#    #+#                */
-/*   Updated: 2019/12/16 15:23:26 by ldideric      ########   odam.nl         */
+/*   Updated: 2019/12/17 20:54:32 by ldideric      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,8 @@ static int	ft_makestr(char *format, va_list ap, int len, int i)
 		else if (format[i] == '%')
 		{
 			len = len + ft_flags(format + i, ap);
+			i++;
 			while (ft_isalpha(format[i]) == 0 && format[i] != '%')
-				i++;
-			if (format[i] == '%')
 				i++;
 		}
 		i++;

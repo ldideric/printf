@@ -6,7 +6,7 @@
 #    By: ldideric <marvin@codam.nl>                   +#+                      #
 #                                                    +#+                       #
 #    Created: 2019/10/31 13:33:11 by ldideric       #+#    #+#                 #
-#    Updated: 2019/12/16 14:47:54 by ldideric      ########   odam.nl          #
+#    Updated: 2019/12/17 12:24:04 by ldideric      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -198,6 +198,7 @@ norm:
 	@python ~/norminette+/run.py printf libft libft_bonus Makefile
 
 test:
+	@clear
 	@echo "$(V)Creating a.out...\n$(RES)"
 	@gcc $(PRINTF_SRC:%=$(SRC_PATH:%=$(PRINTF_PATH)%)%) \
 		$(LIBFT_SRC:%=$(SRC_PATH:%=$(LIBFT_PATH)%)%) \
@@ -205,7 +206,26 @@ test:
 		printf/SRC/main.c -g $(FLAGS) -D REAL="\"$(REAL)$(STRING)\", $(ARG)" \
 		-D MINE="\"$(MINE)$(STRING)\", $(ARG)" -D \
 		FIRST="\"\x1b[38;5;205m|\x1b[38;5;219m%d\x1b[38;5;205m|\n\""
-	@echo "$(PL)Comparing output:"
+	@clear
+	@echo "$(R)[>    ]"
+	@sleep .2
+	@clear
+	@echo "$(R)[ >   ]"
+	@sleep .2
+	@clear
+	@echo "$(O)[  >  ]"
+	@sleep .2
+	@clear
+	@echo "$(O)[   > ]"
+	@sleep .2
+	@clear
+	@echo "$(G)[    >]"
+	@sleep .2
+	@clear
+	@echo "$(G)[DONE!]"
+	@sleep .5
+	@clear
+	@echo "$(PL)Comparing output of $(P)\"$(STRING)\", $(ARG)"
 	@echo "$(PI).---#|=============|#---.$(RES)"
 	@./a.out
 	@echo "$(PI)'---#|=============|#---'$(RES)"
