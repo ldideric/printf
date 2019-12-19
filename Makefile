@@ -6,7 +6,7 @@
 #    By: ldideric <marvin@codam.nl>                   +#+                      #
 #                                                    +#+                       #
 #    Created: 2019/10/31 13:33:11 by ldideric       #+#    #+#                 #
-#    Updated: 2019/12/17 12:24:04 by ldideric      ########   odam.nl          #
+#    Updated: 2019/12/19 20:11:08 by ldideric      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -203,7 +203,7 @@ test:
 	@gcc $(PRINTF_SRC:%=$(SRC_PATH:%=$(PRINTF_PATH)%)%) \
 		$(LIBFT_SRC:%=$(SRC_PATH:%=$(LIBFT_PATH)%)%) \
 		$(BONUS_SRC:%=$(SRC_PATH:%=$(BONUS_PATH)%)%) \
-		printf/SRC/main.c -g $(FLAGS) -D REAL="\"$(REAL)$(STRING)\", $(ARG)" \
+		printf/SRC/main.c $(FLAGS) -D REAL="\"$(REAL)$(STRING)\", $(ARG)" \
 		-D MINE="\"$(MINE)$(STRING)\", $(ARG)" -D \
 		FIRST="\"\x1b[38;5;205m|\x1b[38;5;219m%d\x1b[38;5;205m|\n\""
 	@clear
@@ -229,3 +229,4 @@ test:
 	@echo "$(PI).---#|=============|#---.$(RES)"
 	@./a.out
 	@echo "$(PI)'---#|=============|#---'$(RES)"
+	@rm a.out
