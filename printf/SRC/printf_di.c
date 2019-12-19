@@ -6,65 +6,80 @@
 /*   By: ldideric <ldideric@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/12/12 17:05:39 by ldideric       #+#    #+#                */
-/*   Updated: 2019/12/16 11:14:58 by ldideric      ########   odam.nl         */
+/*   Updated: 2019/12/19 18:26:00 by ldideric      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static char	*printf_di_str(char *s, t_arg list, char *new, int p)
+static int	printf_di_str(char *s, t_arg list)
 {
-	int slen;
-	int i;
+	int	len;
+	int	i;
 
 	i = 0;
-	new = ft_strjoin(new, (s[0] == '-' && p == 1) ? "-" : "");
-	slen = (s[0] == '-') ? ft_strlen(s) - 1 : ft_strlen(s);
-	if (list.prec > slen)
+	len = 0;
+	while (list.prec > (int)ft_strlen(s))
 	{
-		while (i < list.prec - slen)
-		{
-			new = ft_strjoin(new, "0");
-			i++;
-		}
-		if (s[i - (list.prec - slen)] && i < list.prec)
-			new = ft_strjoin(new, ft_substr(s, 1, ft_strlen(s) - 1));
+		ft_putchar('0');
+		len++;
+		list.prec--;
 	}
-	else
-		new = ft_strjoin(new, s + i);
-	return (new);
+	while (s[i])
+	{
+		ft_putchar(s[i]);
+		i++;
+	}
+	return (len + i);
 }
 
-static char	*printf_di_width(char *s, t_arg list, char *new, int p)
+static int	printf_di_width(char *s, t_arg list)
 {
+	char	c;
 	int		slen;
 	int		len;
-	char	*c;
+	int		i;
 
-	slen = ((int)ft_strlen(s) > list.prec) ? ft_strlen(s) : list.prec;
+	i = 0;
+	c = (list.zero && !list.prec) ? '0' : ' ';
+	slen = (list.prec > (int)ft_strlen(s)) ? list.prec : ft_strlen(s);
 	slen = (s[0] == '-' && list.prec > (int)ft_strlen(s)) ? slen + 1 : slen;
-	new = ft_strjoin(new, (s[0] == '-' && p == 1 && list.width < slen) ? "-" : "");
-	new[(ft_strlen(new) - 1 >= 0) ? ft_strlen(new) - 1 : 0] = (list.zero) ? '-' : '\0';
 	len = (list.width > slen) ? list.width - slen : 0;
-	c = (list.zero) ? "0" : " ";
-	while (len > 0)
+	while (i < len)
 	{
-		new = ft_strjoin(new, c);
-		len--;
+		ft_putchar(c);
+		i++;
 	}
-	return (new);
+	return (i);
 }
 
-static char	*printf_di_ext(char *s, t_arg list)
+static int	printf_di_ext(char *s, t_arg list, int i)
 {
-	char	*new;
-
-	new = "";
 	if (list.minus)
-		new = ft_strjoin(printf_di_str(s, list, new, 1), printf_di_width(s, list, new, 2));
-	else if (!list.minus)
-		new = ft_strjoin(printf_di_width(s, list, new, 1), printf_di_str(s, list, new, 2));
-	return (new);
+	{
+		ft_putchar('-');
+		i++;
+		i = i + printf_di_str(s + 1, list);
+		i = i + printf_di_width(s, list);
+	}
+	else
+	{
+		if (list.zero && !list.prec)
+		{
+			ft_putchar('-');
+			i++;
+			i = i + printf_di_width(s, list);
+			i = i + printf_di_str(s + 1, list);
+		}
+		else
+		{
+			i = i + printf_di_width(s, list);
+			ft_putchar('-');
+			i++;
+			i = i + printf_di_str(s + 1, list);
+		}
+	}
+	return (i);
 }
 
 int			printf_di(va_list ap, t_arg list)
@@ -73,14 +88,20 @@ int			printf_di(va_list ap, t_arg list)
 	int		i;
 
 	i = 0;
-	list.width = (list.intwidth) ? va_arg(ap, int) : list.width;
-	list.prec = (list.intprec) ? va_arg(ap, int) : list.prec;
 	str = ft_itoa_base(va_arg(ap, int), 10, 0);
-	str = printf_di_ext(str, list);
-	while (str[i])
+	str[0] = (str[0] == '0' && list.prec) ? '\0' : str[0];
+	list.zero = (list.zero && list.minus) ? 0 : list.zero;
+	if (str[0] != '-' && !list.minus)
 	{
-		ft_putchar(str[i]);
-		i++;
+		i = i + printf_di_width(str, list);
+		i = i + printf_di_str(str, list);
 	}
+	else if (str[0] != '-' && list.minus)
+	{
+		i = i + printf_di_str(str, list);
+		i = i + printf_di_width(str, list);
+	}
+	else
+		i = printf_di_ext(str, list, 0);
 	return (i);
 }

@@ -6,59 +6,76 @@
 /*   By: ldideric <ldideric@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/12/07 13:47:07 by ldideric       #+#    #+#                */
-/*   Updated: 2019/12/09 15:58:39 by ldideric      ########   odam.nl         */
+/*   Updated: 2019/12/19 18:21:17 by ldideric      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static int	printf_u_ext(char *str, t_arg list, char c)
+static int	printf_u_str(char *s, t_arg list)
 {
-	int i;
+	int	len;
+	int	i;
 
 	i = 0;
-	if (*str == '-')
+	len = 0;
+	while (list.prec > (int)ft_strlen(s))
 	{
-		ft_putchar(str[0]);
-		list.width--;
-		i++;
-		str++;
+		ft_putchar('0');
+		len++;
+		list.prec--;
 	}
-	while (list.width > (int)ft_strlen(str))
+	while (s[i])
+	{
+		ft_putchar(s[i]);
+		i++;
+	}
+	return (len + i);
+}
+
+static int	printf_u_width(char *s, t_arg list)
+{
+	char	c;
+	int		slen;
+	int		len;
+	int		i;
+
+	i = 0;
+	c = (list.zero && !list.prec) ? '0' : ' ';
+	slen = (list.prec > (int)ft_strlen(s)) ? list.prec : ft_strlen(s);
+	slen = (s[0] == '-' && list.prec > (int)ft_strlen(s)) ? slen + 1 : slen;
+	len = (list.width > slen) ? list.width - slen : 0;
+	while (i < len)
 	{
 		ft_putchar(c);
 		i++;
-		list.width--;
 	}
-	while (*str)
+	return (i);
+}
+
+static int	printf_u_ext(char *s, t_arg list, int i)
+{
+	if (list.minus)
 	{
-		ft_putchar(*str);
-		str++;
-		i++;
+		i = i + printf_u_str(s, list);
+		i = i + printf_u_width(s, list);
+	}
+	else
+	{
+		i = i + printf_u_width(s, list);
+		i = i + printf_u_str(s, list);
 	}
 	return (i);
 }
 
 int			printf_u(va_list ap, t_arg list)
 {
-	int		i;
-	char	c;
 	char	*str;
+	int		i;
 
 	i = 0;
-	c = (list.zero) ? '0' : ' ';
-	if (list.intprec)
-		list.prec = va_arg(ap, int);
-	if (list.intwidth)
-		list.width = va_arg(ap, int);
 	str = ft_itoa_base(va_arg(ap, unsigned int), 10, 0);
-	if (list.width)
-		i = printf_u_ext(str, list, c);
-	else
-		while (str[i])
-		{
-			ft_putchar(str[i]);
-			i++;
-		}
+	str[0] = (str[0] == '0' && list.prec) ? '\0' : str[0];
+	i = printf_u_ext(str, list, 0);
 	return (i);
 }

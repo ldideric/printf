@@ -6,7 +6,7 @@
 /*   By: ldideric <ldideric@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/12/03 01:38:37 by ldideric       #+#    #+#                */
-/*   Updated: 2019/12/16 14:49:50 by ldideric      ########   odam.nl         */
+/*   Updated: 2019/12/19 18:42:26 by ldideric      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,29 @@ static t_arg	ft_flagcheck(char *str, t_arg list)
 	return (list);
 }
 
+static t_arg	ft_prewid(t_arg list, va_list ap)
+{
+	if (list.intwidth)
+	{
+		list.width = va_arg(ap, int);
+		list.width = (list.width == 0) ? -1 : list.width;
+		if (list.width < 0)
+		{
+			list.width = -list.width;
+			list.minus = 1;
+		}
+	}
+	if (list.intprec)
+	{
+		list.prec = va_arg(ap, int);
+		if (list.prec == 0)
+			list.prec = -1;
+		else if (list.prec < 0)
+			list.prec = 0;
+	}
+	return (list);
+}
+
 int				ft_flags(char *str, va_list ap)
 {
 	int		i;
@@ -88,10 +111,18 @@ int				ft_flags(char *str, va_list ap)
 	list = ft_argnew();
 	if (ft_isalpha(str[i]) == 0)
 		*list = ft_flagcheck(str + i, *list);
-	while (ft_isalpha(str[i]) == 0 && str[i] != '%')
+	while (ft_isalpha(str[i]) == 0 && str[i] != '%' && str[i] != '\0')
 		i++;
 	list[0].hex = (str[i] == 'X') ? 1 : list[0].hex;
-	spec = ft_specifier(str[i]);
+	*list = ft_prewid(*list, ap);
+	if (ft_isalpha(str[i]) || str[i] == '%')
+	{
+		spec = ft_specifier(str[i]);
+		if (spec == NULL)
+			return (0);
+	}
+	else
+		return (0);
 	i = spec(ap, *list);
 	free(list);
 	return (i);

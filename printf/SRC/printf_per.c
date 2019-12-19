@@ -6,7 +6,7 @@
 /*   By: ldideric <ldideric@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/12/16 14:42:02 by ldideric       #+#    #+#                */
-/*   Updated: 2019/12/16 15:17:17 by ldideric      ########   odam.nl         */
+/*   Updated: 2019/12/19 18:23:43 by ldideric      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,10 @@ int			printf_per(va_list ap, t_arg list)
 	int		len;
 	char	c;
 
+	if (ap->fp_offset)
+		len = 0;
 	c = (list.zero && !list.minus) ? '0' : ' ';
 	len = 0;
-	list.width = (list.intwidth) ? va_arg(ap, int) : list.width;
 	if (list.minus)
 		ft_putchar('%');
 	if (list.width)
