@@ -6,7 +6,7 @@
 /*   By: ldideric <ldideric@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/12/07 13:47:07 by ldideric       #+#    #+#                */
-/*   Updated: 2019/12/19 18:21:17 by ldideric      ########   odam.nl         */
+/*   Updated: 2019/12/19 20:27:52 by ldideric      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,10 @@ int			printf_u(va_list ap, t_arg list)
 
 	i = 0;
 	str = ft_itoa_base(va_arg(ap, unsigned int), 10, 0);
+	if (str == NULL)
+		return (0);
 	str[0] = (str[0] == '0' && list.prec) ? '\0' : str[0];
 	i = printf_u_ext(str, list, 0);
+	free(str);
 	return (i);
 }

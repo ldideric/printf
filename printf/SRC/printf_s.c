@@ -6,7 +6,7 @@
 /*   By: ldideric <ldideric@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/12/03 02:51:47 by ldideric       #+#    #+#                */
-/*   Updated: 2019/12/19 18:22:48 by ldideric      ########   odam.nl         */
+/*   Updated: 2019/12/20 12:01:49 by ldideric      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,11 +66,6 @@ int			printf_s(va_list ap, t_arg list)
 
 	i = 0;
 	c = (list.zero) ? '0' : ' ';
-	if (list.width < 0)
-	{
-		list.minus = 1;
-		list.width = -list.width;
-	}
 	list.intprec = 0;
 	s = va_arg(ap, char *);
 	s = (s == NULL) ? "(null)" : s;

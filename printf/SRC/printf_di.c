@@ -6,7 +6,7 @@
 /*   By: ldideric <ldideric@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/12/12 17:05:39 by ldideric       #+#    #+#                */
-/*   Updated: 2019/12/19 18:26:00 by ldideric      ########   odam.nl         */
+/*   Updated: 2019/12/20 11:48:22 by ldideric      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static int	printf_di_width(char *s, t_arg list)
 	i = 0;
 	c = (list.zero && !list.prec) ? '0' : ' ';
 	slen = (list.prec > (int)ft_strlen(s)) ? list.prec : ft_strlen(s);
-	slen = (s[0] == '-' && list.prec > (int)ft_strlen(s)) ? slen + 1 : slen;
+	slen = (s[0] == '-' && list.prec >= (int)ft_strlen(s)) ? slen + 1 : slen;
 	len = (list.width > slen) ? list.width - slen : 0;
 	while (i < len)
 	{
@@ -89,6 +89,8 @@ int			printf_di(va_list ap, t_arg list)
 
 	i = 0;
 	str = ft_itoa_base(va_arg(ap, int), 10, 0);
+	if (str == NULL)
+		return (0);
 	str[0] = (str[0] == '0' && list.prec) ? '\0' : str[0];
 	list.zero = (list.zero && list.minus) ? 0 : list.zero;
 	if (str[0] != '-' && !list.minus)
@@ -103,5 +105,7 @@ int			printf_di(va_list ap, t_arg list)
 	}
 	else
 		i = printf_di_ext(str, list, 0);
+	if (str[0] != '\0')
+		free(str);
 	return (i);
 }

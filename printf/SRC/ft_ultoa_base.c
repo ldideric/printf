@@ -1,22 +1,43 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   ft_itoa_base.c                                     :+:    :+:            */
+/*   ft_ultoa_base.c                                    :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: ldideric <ldideric@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2019/12/06 10:41:54 by ldideric       #+#    #+#                */
-/*   Updated: 2019/12/19 20:39:25 by ldideric      ########   odam.nl         */
+/*   Created: 2019/12/19 20:38:53 by ldideric       #+#    #+#                */
+/*   Updated: 2019/12/19 20:48:13 by ldideric      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static char	*itoa_base(char *str, long long a, int base)
+static int	ft_intcharsul(unsigned long a, unsigned long base)
 {
-	int i;
+	unsigned long	i;
 
-	i = ft_intchars(a, base) - 1;
+	i = 0;
+	if (a < 0)
+	{
+		a = -a;
+		i++;
+	}
+	while (a / base > 0)
+	{
+		a = a / base;
+		i++;
+	}
+	if (a > 0 && a < base)
+		i++;
+	i = (a == 0) ? 1 : i;
+	return (i);
+}
+
+static char	*ultoa_base(char *str, unsigned long a, unsigned long base)
+{
+	unsigned long	i;
+
+	i = ft_intcharsul(a, base) - 1;
 	if (a == 0)
 	{
 		str[0] = '0';
@@ -38,17 +59,17 @@ static char	*itoa_base(char *str, long long a, int base)
 	return (str);
 }
 
-char		*ft_itoa_base(long long a, int base, int big)
+char		*ft_ultoa_base(unsigned long a, unsigned long base, int big)
 {
 	char	*str;
 	int		i;
 
-	i = ft_intchars(a, base) - 1;
+	i = ft_intcharsul(a, base) - 1;
 	str = malloc(sizeof(char) * (i + 2));
 	if (str == NULL)
 		return (0);
 	str[i + 1] = '\0';
-	str = itoa_base(str, a, base);
+	str = ultoa_base(str, a, base);
 	while (i >= 0 && big == 0)
 	{
 		str[i] = ft_tolower(str[i]);

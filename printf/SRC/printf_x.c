@@ -6,7 +6,7 @@
 /*   By: ldideric <ldideric@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/12/07 13:48:42 by ldideric       #+#    #+#                */
-/*   Updated: 2019/12/19 18:22:21 by ldideric      ########   odam.nl         */
+/*   Updated: 2019/12/20 11:43:36 by ldideric      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,8 @@ static int	printf_x_ext(va_list ap, t_arg list)
 
 	i = 0;
 	s = ft_itoa_base(va_arg(ap, unsigned int), 16, (list.hex) ? 1 : 0);
+	if (s == NULL)
+		return (0);
 	s = (ft_strncmp(s, "0", 2) == 0 && list.prec) ? "" : s;
 	i = (list.width && list.minus) ? i + printf_x_str(s, list)
 	+ printf_x_width(s, list) : i;
@@ -74,6 +76,8 @@ static int	printf_x_ext(va_list ap, t_arg list)
 	+ printf_x_str(s, list) : i;
 	i = ((!list.width && !list.minus) || (!list.width && list.minus))
 	? i + printf_x_str(s, list) : i;
+	if (s[0] != '\0')
+		free(s);
 	return (i);
 }
 
@@ -89,11 +93,14 @@ int			printf_x(va_list ap, t_arg list)
 	{
 		s = ft_itoa_base(va_arg(ap, unsigned int), 16,
 		(list.hex) ? 1 : 0);
+		if (s == NULL)
+			return (0);
 		while (s[i])
 		{
 			ft_putchar(s[i]);
 			i++;
 		}
+		free(s);
 	}
 	return (i);
 }

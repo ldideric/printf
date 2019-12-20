@@ -6,7 +6,7 @@
 /*   By: ldideric <ldideric@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/12/02 17:15:25 by ldideric       #+#    #+#                */
-/*   Updated: 2019/12/16 14:48:19 by ldideric      ########   odam.nl         */
+/*   Updated: 2019/12/19 20:43:46 by ldideric      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ t_arg			*ft_argnew(void);
 int				ft_numlen(char *str);
 int				ft_intchars(long long a, int base);
 char			*ft_itoa_base(long long a, int base, int big);
+char			*ft_ultoa_base(unsigned long a, unsigned long base, int big);
 int				printf_c(va_list ap, t_arg list);
 int				printf_s(va_list ap, t_arg list);
 int				printf_p(va_list ap, t_arg list);

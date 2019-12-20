@@ -6,7 +6,7 @@
 #    By: ldideric <marvin@codam.nl>                   +#+                      #
 #                                                    +#+                       #
 #    Created: 2019/10/31 13:33:11 by ldideric       #+#    #+#                 #
-#    Updated: 2019/12/19 20:11:08 by ldideric      ########   odam.nl          #
+#    Updated: 2019/12/20 12:47:37 by ldideric      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,6 +17,7 @@ PRINTF_SRC	=	ft_printf.c \
 				ft_printf_bonus.c \
 				ft_flags.c \
 				ft_itoa_base.c \
+				ft_ultoa_base.c \
 				printf_c.c \
 				printf_s.c \
 				printf_di.c \
@@ -204,8 +205,8 @@ test:
 		$(LIBFT_SRC:%=$(SRC_PATH:%=$(LIBFT_PATH)%)%) \
 		$(BONUS_SRC:%=$(SRC_PATH:%=$(BONUS_PATH)%)%) \
 		printf/SRC/main.c $(FLAGS) -D REAL="\"$(REAL)$(STRING)\", $(ARG)" \
-		-D MINE="\"$(MINE)$(STRING)\", $(ARG)" -D \
-		FIRST="\"\x1b[38;5;205m|\x1b[38;5;219m%d\x1b[38;5;205m|\n\""
+		-g -D MINE="\"$(MINE)$(STRING)\", $(ARG)" -D \
+		FIRST="\"\x1b[38;5;205m|\x1b[38;5;219m%4d\x1b[38;5;205m|\n\""
 	@clear
 	@echo "$(R)[>    ]"
 	@sleep .2
@@ -229,4 +230,4 @@ test:
 	@echo "$(PI).---#|=============|#---.$(RES)"
 	@./a.out
 	@echo "$(PI)'---#|=============|#---'$(RES)"
-	@rm a.out
+#	@rm a.out

@@ -6,7 +6,7 @@
 /*   By: ldideric <ldideric@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/12/07 13:45:17 by ldideric       #+#    #+#                */
-/*   Updated: 2019/12/19 19:55:01 by ldideric      ########   odam.nl         */
+/*   Updated: 2019/12/20 12:41:35 by ldideric      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,26 @@ static int	printf_p_width(t_arg list, char *s)
 	return (i);
 }
 
+static int	printf_p_str(char *s, t_arg list)
+{
+	int	i;
+	int	len;
+
+	i = 0;
+	len = (list.prec > (int)ft_strlen(s)) ? list.prec - (int)ft_strlen(s) : 0;
+	while (i < len)
+	{
+		ft_putchar('0');
+		i++;
+	}
+	while (s[i - len])
+	{
+		ft_putchar(s[i - len]);
+		i++;
+	}
+	return (i);
+}
+
 int			printf_p(va_list ap, t_arg list)
 {
 	char	*str;
@@ -37,18 +57,22 @@ int			printf_p(va_list ap, t_arg list)
 
 	i = 0;
 	len = 0;
-	str = ft_itoa_base((unsigned long)va_arg(ap, void *), 16, 0);
-	str = (ft_strncmp(str, "0", 3) == 0 && list.prec < 0) ? "" : str;
+	str = ft_ultoa_base(va_arg(ap, unsigned long), 16, 0);
+	if (str == NULL)
+		return (0);
+	if (ft_strncmp(str, "0", 3) == 0 && list.prec < 0)
+	{
+		free(str);
+		str = "\0";
+	}
 	if (list.width && !list.minus)
 		len = len + printf_p_width(list, str);
 	ft_putstr("0x");
 	len = len + 2;
-	while (str[i])
-	{
-		ft_putchar(str[i]);
-		i++;
-	}
+	len = len + printf_p_str(str, list);
 	if (list.width && list.minus)
 		len = len + printf_p_width(list, str);
+	if (str[0] != '\0')
+		free(str);
 	return (i + len);
 }
