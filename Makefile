@@ -6,7 +6,7 @@
 #    By: ldideric <marvin@codam.nl>                   +#+                      #
 #                                                    +#+                       #
 #    Created: 2019/10/31 13:33:11 by ldideric       #+#    #+#                 #
-#    Updated: 2019/12/20 16:20:41 by ldideric      ########   odam.nl          #
+#    Updated: 2019/12/21 19:34:05 by ldideric      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -174,7 +174,7 @@ test:
 	@gcc $(PRINTF_OP) $(LIBFT_OP) main.c $(FLAGS) \
 		-D REAL="\"$(REAL)$(STRING)\", $(ARG)" \
 		-D MINE="\"$(MINE)$(STRING)\", $(ARG)" \
-		-D FIRST=$(FIRST)
+		-D FIRST=$(FIRST) -fsanitize=address
 	@clear
 	@echo "$(R)[>    ]"
 	@sleep .2
