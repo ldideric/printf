@@ -6,7 +6,7 @@
 /*   By: ldideric <ldideric@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/12/07 13:48:42 by ldideric       #+#    #+#                */
-/*   Updated: 2019/12/20 16:16:14 by ldideric      ########   odam.nl         */
+/*   Updated: 2020/01/09 11:10:27 by ldideric      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ static int	printf_x_ext(va_list ap, t_arg list)
 	i = 0;
 	s = ft_itoa_base(va_arg(ap, unsigned int), 16, (list.hex) ? 1 : 0);
 	if (s == NULL)
-		return (ft_freestr(s));
+		return (ft_freevoid(s));
 	s = (ft_strncmp(s, "0", 2) == 0 && list.prec) ? "" : s;
 	i = (list.width && list.minus) ? i + printf_x_str(s, list)
 	+ printf_x_width(s, list) : i;
@@ -94,7 +94,7 @@ int			printf_x(va_list ap, t_arg list)
 		s = ft_itoa_base(va_arg(ap, unsigned int), 16,
 		(list.hex) ? 1 : 0);
 		if (s == NULL)
-			return (ft_freestr(s));
+			return (ft_freevoid(s));
 		while (s[i])
 		{
 			ft_putchar(s[i]);

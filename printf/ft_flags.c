@@ -6,7 +6,7 @@
 /*   By: ldideric <ldideric@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/12/03 01:38:37 by ldideric       #+#    #+#                */
-/*   Updated: 2019/12/20 16:04:30 by ldideric      ########   odam.nl         */
+/*   Updated: 2020/01/09 11:10:37 by ldideric      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,12 +60,12 @@ static t_arg	ft_flagcheck(char *str, t_arg list)
 	int i;
 
 	i = 0;
-	if (str[i] == '0')
+	while (str[i] == '0')
 	{
 		list.zero = 1;
 		i++;
 	}
-	if (str[i] == '-')
+	while (str[i] == '-')
 	{
 		list.minus = 1;
 		i++;
@@ -120,10 +120,10 @@ int				ft_flags(char *str, va_list ap)
 	{
 		spec = ft_specifier(str[i]);
 		if (spec == NULL)
-			return (ft_freestruct(list));
+			return (ft_freevoid(list));
 	}
 	else
-		return (ft_freestruct(list));
+		return (ft_freevoid(list));
 	i = spec(ap, *list);
 	free(list);
 	return (i);

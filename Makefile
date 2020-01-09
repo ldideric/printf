@@ -6,7 +6,7 @@
 #    By: ldideric <marvin@codam.nl>                   +#+                      #
 #                                                    +#+                       #
 #    Created: 2019/10/31 13:33:11 by ldideric       #+#    #+#                 #
-#    Updated: 2019/12/21 19:34:05 by ldideric      ########   odam.nl          #
+#    Updated: 2020/01/09 11:13:30 by ldideric      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -63,16 +63,7 @@ LIBFT_SRC	=	ft_memset.c \
 				ft_putendl_fd.c \
 				ft_putnbr_fd.c \
 				ft_putchar.c \
-				ft_putstr.c \
-				ft_lstnew_bonus.c \
-				ft_lstadd_front_bonus.c \
-				ft_lstsize_bonus.c \
-				ft_lstadd_back_bonus.c \
-				ft_lstlast_bonus.c \
-				ft_lstdelone_bonus.c \
-				ft_lstclear_bonus.c \
-				ft_lstiter_bonus.c \
-				ft_lstmap_bonus.c
+				ft_putstr.c
 LIBFT_OBJ	= ${LIBFT_SRC:.c=.o}
 
 FLAGS		= -Wall -Wextra -Werror
@@ -168,13 +159,13 @@ norm:
 	@echo "$(R)NORMINETTE PLUS$(RES)"
 	@python ~/norminette+/run.py printf libft Makefile
 
-test:
+test: 
 	@clear
 	@echo "$(V)Creating a.out...\n$(RES)"
 	@gcc $(PRINTF_OP) $(LIBFT_OP) main.c $(FLAGS) \
 		-D REAL="\"$(REAL)$(STRING)\", $(ARG)" \
 		-D MINE="\"$(MINE)$(STRING)\", $(ARG)" \
-		-D FIRST=$(FIRST) -fsanitize=address
+		-D FIRST=$(FIRST) -g
 	@clear
 	@echo "$(R)[>    ]"
 	@sleep .2
@@ -198,4 +189,4 @@ test:
 	@echo "$(PI).---#|=============|#---.$(RES)"
 	@./a.out
 	@echo "$(PI)'---#|=============|#---'$(RES)"
-	@rm a.out
+#	@rm a.out

@@ -6,7 +6,7 @@
 /*   By: ldideric <ldideric@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/12/02 18:43:08 by ldideric       #+#    #+#                */
-/*   Updated: 2019/12/20 16:14:06 by ldideric      ########   odam.nl         */
+/*   Updated: 2020/01/09 11:09:57 by ldideric      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,14 +60,8 @@ int			ft_intchars(long long a, int base)
 	return (i);
 }
 
-int			ft_freestruct(t_arg *list)
+int			ft_freevoid(void *item)
 {
-	free(list);
-	return (0);
-}
-
-int			ft_freestr(char *s)
-{
-	free(s);
+	free(item);
 	return (0);
 }

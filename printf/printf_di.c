@@ -6,7 +6,7 @@
 /*   By: ldideric <ldideric@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/12/12 17:05:39 by ldideric       #+#    #+#                */
-/*   Updated: 2019/12/20 16:14:59 by ldideric      ########   odam.nl         */
+/*   Updated: 2020/01/09 11:10:02 by ldideric      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ int			printf_di(va_list ap, t_arg list)
 	i = 0;
 	str = ft_itoa_base(va_arg(ap, int), 10, 0);
 	if (str == NULL)
-		return (ft_freestr(str));
+		return (ft_freevoid(str));
 	str[0] = (str[0] == '0' && list.prec) ? '\0' : str[0];
 	list.zero = (list.zero && list.minus) ? 0 : list.zero;
 	if (str[0] != '-' && !list.minus)

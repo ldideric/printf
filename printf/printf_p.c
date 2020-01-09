@@ -6,7 +6,7 @@
 /*   By: ldideric <ldideric@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/12/07 13:45:17 by ldideric       #+#    #+#                */
-/*   Updated: 2019/12/20 16:15:12 by ldideric      ########   odam.nl         */
+/*   Updated: 2020/01/09 11:10:34 by ldideric      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int			printf_p(va_list ap, t_arg list)
 	len = 0;
 	str = ft_ultoa_base(va_arg(ap, unsigned long), 16, 0);
 	if (str == NULL)
-		return (ft_freestr(str));
+		return (ft_freevoid(str));
 	if (ft_strncmp(str, "0", 3) == 0 && list.prec < 0)
 	{
 		free(str);
